@@ -13,7 +13,7 @@ OBJFILES = $(CFILES:.c=.o) $(CPPFILES:.cpp=.o)
 OUT      = main
 
 CC = gcc
-FFLAGS = -O3 -Wall
+FFLAGS = -Wall -std=c99
 
 #creates executable file main.exe
 $(OUT): $(OBJFILES)
