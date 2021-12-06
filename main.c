@@ -27,7 +27,7 @@ int main(int argc, char* argv[]){
     size_t len = 0;
     ssize_t read;
     //int nds[55863][55863];
-    const int num_nodes = 55863;
+    const int num_nodes = 1000;
     int nds[num_nodes][num_nodes];
     for(int i = 0; i < num_nodes; i++){
         for(int j = 0; j < num_nodes; j++){
@@ -42,11 +42,11 @@ int main(int argc, char* argv[]){
     int src_loc = -1;
     int des_loc = -1;
 
-    for(int i = 0; i < 858490; i++){
+    for(int i = 0; i < 500; i++){
         dest = NULL;
         source = NULL;
         read = getline(&line, &len, file);
-        printf("Retrieved line of length %zu:\n", read);
+        //printf("Retrieved line %d of length %zu:\n", i, read);
         source = strtok(line, "\t");
         dest = strtok(NULL, "\t");
         if(head != NULL){
@@ -66,15 +66,15 @@ int main(int argc, char* argv[]){
 
     Print(head);
 
-    printf("value: %d\n", SearchList(head, "hi"));
-    printf("value: %d\n", SearchList(head, "aww"));
+    //printf("value: %d\n", SearchList(head, "hi"));
+    //printf("value: %d\n", SearchList(head, "aww"));
 
-    for(int i = 0; i < 20; i++){
-        for(int j = 0; j < 20; j++){
-            printf("%d", nds[i][j]);
-        }
-        printf("\n");
-    }
+    //for(int i = 0; i < 20; i++){
+    //    for(int j = 0; j < 20; j++){
+    //        printf("%d", nds[i][j]);
+    //    }
+    //    printf("\n");
+    //}
 
     fclose(file);
 

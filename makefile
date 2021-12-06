@@ -15,7 +15,7 @@ OUT      = main
 CC = gcc
 FFLAGS = -O3 -Wall
 
-#creates executable file main
+#creates executable file main.exe
 $(OUT): $(OBJFILES)
 
 .PHONY: clean
