@@ -4,6 +4,7 @@
 #include <math.h>
 #include <time.h>
 #include <assert.h>
+#include <sys/types.h>
 //#include "hash.h"
 //#include "node.h"
 #include "subreddits.h"
@@ -23,9 +24,9 @@ int main(int argc, char* argv[]){
     char* filename = "soc-redditHyperlinks-body.tsv";
     FILE* file = fopen(filename,"r");
 
-    char * line = NULL;
-    size_t len = 0;
-    ssize_t read;
+    //char * line = NULL;
+    //size_t len = 0;
+    //ssize_t read;
     //int nds[55863][55863];
     const int num_nodes = 1000;
     int nds[num_nodes][num_nodes];
@@ -36,7 +37,8 @@ int main(int argc, char* argv[]){
     }
     char * source = NULL;
     char * dest = NULL;
-    read = getline(&line, &len, file);
+    char buf[3000];
+    fgets(buf, 3000, file);
 
     subreddit* head = NULL;
     int src_loc = -1;
@@ -45,9 +47,10 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < 500; i++){
         dest = NULL;
         source = NULL;
-        read = getline(&line, &len, file);
+        //read = getline(&line, &len, file);
+        fgets(buf, 3000, file);
         //printf("Retrieved line %d of length %zu:\n", i, read);
-        source = strtok(line, "\t");
+        source = strtok(buf, "\t");
         dest = strtok(NULL, "\t");
         if(head != NULL){
             src_loc = SearchList(head, source);

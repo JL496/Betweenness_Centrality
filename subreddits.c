@@ -78,7 +78,7 @@ void RemoveItem(subreddit** head, int n){
 
 int SearchList(const subreddit* head, char * key){
     if (strcmp(head->name, key)==0){
-        printf(" Key found at Position: %i\n", head->position);
+        //printf(" Key found at Position: %i\n", head->position);
         return head->position;
     }
     if (head->next==NULL){
