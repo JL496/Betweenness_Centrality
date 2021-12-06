@@ -1,24 +1,15 @@
-# File name: makefile
-# Description: creates executable program main
-#
-# Author: Julia Lundstrum
-# netid: jlu
-# 
-# Revision History (Date: Description):
-# 11/27/21: File created 
-
-CFILES   = $(wildcard *.c)
-CPPFILES = $(wildcard *.cpp)
-OBJFILES = $(CFILES:.c=.o) $(CPPFILES:.cpp=.o)
-OUT      = main
-
 CC = gcc
-FFLAGS = -Wall -std=c99
+FFLAGS = -Wall -std=c99 -Xpreprocessor  -fopenmp
+LFLAGS = -lgomp
 
-#creates executable file main.exe
-$(OUT): $(OBJFILES)
+OBJECTS = main.o \
+subreddits.o
 
-.PHONY: clean
-#force removes main
+main.exe: $(OBJECTS)
+	$(CC) $(LFLAGS) $(OBJECTS) -o main.exe -lm
+
+%.o: %.c
+	$(CC) $(FFLAGS) -c $<
+
 clean:
-	rm -f $(OBJFILES) $(OUT)
+	rm -f $(OBJECTS) main.exe
