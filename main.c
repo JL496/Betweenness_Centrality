@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
     //size_t len = 0;
     //ssize_t read;
     //int nds[55863][55863];
-    const int num_nodes = 1000;
+    const int num_nodes = 60000;
     int nds[num_nodes][num_nodes];
     for(int i = 0; i < num_nodes; i++){
         for(int j = 0; j < num_nodes; j++){
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]){
     int src_loc = -1;
     int des_loc = -1;
 
-    for(int i = 0; i < 500; i++){
+    for(int i = 0; i < 858490; i++){
         dest = NULL;
         source = NULL;
         //read = getline(&line, &len, file);
