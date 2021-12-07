@@ -77,7 +77,7 @@ int main(int argc, char* argv[]){
     }
     const double time4 = omp_get_wtime();
 
-    radix(totals, order, num_nodes);
+    radix(totals, order, num_nodes, thread_count);
     const double time5 = omp_get_wtime();
 
     for(int i = num_nodes-20; i < num_nodes; i++){
