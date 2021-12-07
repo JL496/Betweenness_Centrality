@@ -39,6 +39,7 @@ int main(int argc, char* argv[]){
 
     char names[num_nodes][22];
     const double time1 = omp_get_wtime();
+    int count = 0;
     while(fgets(buf,3000,file) != NULL){
     //for(int i = 0; i < 400; i++){
         dest = NULL;
@@ -61,6 +62,7 @@ int main(int argc, char* argv[]){
             strcpy(names[des_loc], dest);
         }
         addEdge(graph, src_loc, des_loc);
+        count++;
     }
     const double time2 = omp_get_wtime();
 
@@ -85,6 +87,7 @@ int main(int argc, char* argv[]){
     }
     const double time6 = omp_get_wtime();
     printf("Read Time: %12.5e\nShortest Path Time: %12.5e\nSort Time: %12.5e\nTotal Time: %12.5e\n", time2-time1, time4-time3, time5-time4,time6-time0);
+    printf("Count: %d\n", count);
 
 
     fclose(file);
