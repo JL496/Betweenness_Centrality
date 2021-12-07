@@ -39,16 +39,10 @@ int main(int argc, char* argv[]){
 
     char names[num_nodes][22];
     const double time1 = omp_get_wtime();
-    int count = 0;
-    //while(fgets(buf,3000,file) != NULL){
-    #pragma omp parallel for num_threads(thread_count)
-    for(int i = 0; i < 143281; i++){
+    while(fgets(buf,3000,file) != NULL){
         dest = NULL;
         source = NULL;
-        #pragma omp single
-        {
         fgets(buf, 3000, file);
-        }
         source = strtok(buf, "\t");
         dest = strtok(NULL, "\t");
         if(head != NULL){
@@ -66,7 +60,6 @@ int main(int argc, char* argv[]){
             strcpy(names[des_loc], dest);
         }
         addEdge(graph, src_loc, des_loc);
-        count++;
     }
     const double time2 = omp_get_wtime();
 
