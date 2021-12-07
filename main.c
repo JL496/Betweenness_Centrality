@@ -41,14 +41,14 @@ int main(int argc, char* argv[]){
     const double time1 = omp_get_wtime();
     int count = 0;
     //while(fgets(buf,3000,file) != NULL){
-    //#pragma omp parallel for num_threads(thread_count)
+    #pragma omp parallel for num_threads(thread_count)
     for(int i = 0; i < 143281; i++){
         dest = NULL;
         source = NULL;
-        //#pragma omp critical
-        //{
+        #pragma omp single
+        {
         fgets(buf, 3000, file);
-        //}
+        }
         source = strtok(buf, "\t");
         dest = strtok(NULL, "\t");
         if(head != NULL){
