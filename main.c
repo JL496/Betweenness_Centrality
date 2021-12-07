@@ -5,51 +5,45 @@
 #include <time.h>
 #include <assert.h>
 #include <sys/types.h>
-//#include "hash.h"
-//#include "node.h"
+#include <stdbool.h>
+#include "dijkstra.h"
+#include "graph.h"
 #include "subreddits.h"
+#include "radixsort.h"
 #ifdef _OPENMP
 # include <omp.h>
 #endif
 
-//struct Edge {
-//    int src, dest, weight;
-//};
-
-
 int main(int argc, char* argv[]){
+    const double time0 = omp_get_wtime();
 
     //const int thread_count = strtol(argv[1], NULL, 10);
     //const int N = strtol(argv[2], NULL, 10);
+    const int num_nodes = 35775; //35775
+    
     char* filename = "soc-redditHyperlinks-body.tsv";
     FILE* file = fopen(filename,"r");
 
-    //char * line = NULL;
-    //size_t len = 0;
-    //ssize_t read;
-    //int nds[55863][55863];
-    const int num_nodes = 60000;
-    int nds[num_nodes][num_nodes];
-    for(int i = 0; i < num_nodes; i++){
-        for(int j = 0; j < num_nodes; j++){
-            nds[i][j] = 0;
-        }
-    }
+    struct Graph* graph = newGraph(num_nodes);
     char * source = NULL;
     char * dest = NULL;
     char buf[3000];
     fgets(buf, 3000, file);
 
+    int totals[num_nodes];
+    int order[num_nodes];
+
     subreddit* head = NULL;
     int src_loc = -1;
     int des_loc = -1;
 
-    for(int i = 0; i < 858490; i++){
+    char names[num_nodes][22];
+    const double time1 = omp_get_wtime();
+    while(fgets(buf,3000,file) != NULL){
+    //for(int i = 0; i < 400; i++){
         dest = NULL;
         source = NULL;
-        //read = getline(&line, &len, file);
         fgets(buf, 3000, file);
-        //printf("Retrieved line %d of length %zu:\n", i, read);
         source = strtok(buf, "\t");
         dest = strtok(NULL, "\t");
         if(head != NULL){
@@ -57,27 +51,39 @@ int main(int argc, char* argv[]){
         }
         if(src_loc == -1){
             src_loc = AddItem(&head, source);
+            strcpy(names[src_loc], source);
         }
         if(head != NULL){
             des_loc = SearchList(head, dest);
         }
         if(des_loc == -1){
             des_loc = AddItem(&head, dest);
+            strcpy(names[des_loc], dest);
         }
-        nds[src_loc][des_loc] += 1;
+        addEdge(graph, src_loc, des_loc);
     }
+    const double time2 = omp_get_wtime();
 
-    Print(head);
+    for(int j = 0; j < num_nodes; j++){
+        totals[j] = 0;
+        order[j] = j;
+    }
+    const double time3 = omp_get_wtime();
 
-    //printf("value: %d\n", SearchList(head, "hi"));
-    //printf("value: %d\n", SearchList(head, "aww"));
+    for(int i = 0; i < num_nodes; i++){
+        dijkstra(graph, i, totals);
+    }
+    const double time4 = omp_get_wtime();
 
-    //for(int i = 0; i < 20; i++){
-    //    for(int j = 0; j < 20; j++){
-    //        printf("%d", nds[i][j]);
-    //    }
-    //    printf("\n");
-    //}
+    radix(totals, order, num_nodes);
+    const double time5 = omp_get_wtime();
+
+    for(int i = num_nodes-20; i < num_nodes; i++){
+        printf("%s: %d\n", names[order[i]], totals[i]);
+    }
+    const double time6 = omp_get_wtime();
+    printf("Read Time: %d\nShortest Path Time: %d\nSort Time: %d\nTotal Time: %d", time2-time1, time4-time3, time5-time4,time6-time0);
+
 
     fclose(file);
 

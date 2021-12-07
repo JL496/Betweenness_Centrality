@@ -10,11 +10,8 @@ struct subreddit{
 };
 
 // Functions associated with struct subreddit
-void Print(const subreddit* head);
-void PrintList(const subreddit* head);
 int SearchList(const subreddit* head, char * key);
 void DeleteList(subreddit** head);
-void RemoveItem(subreddit** head, int n);
 int AddItem(subreddit** head, char * nm);
 
 #endif

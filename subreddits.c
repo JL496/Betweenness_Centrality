@@ -19,7 +19,7 @@ int AddItem(subreddit** head, char * nm){
             current = current->next;
         }
         pos = current->position + 1;
-        current->next = (subreddit *) malloc(sizeof(subreddit));
+        current->next = (subreddit*)malloc(sizeof(subreddit));
         current->next->position = pos;
         strcpy(current->next->name, nm);
         current->next->next = NULL;    
@@ -36,49 +36,8 @@ void DeleteList(subreddit** head){
     }
 }
 
-void Print(const subreddit* head){
-    if (head==NULL){
-        printf(" List is emtpy.\n\n");
-        return;
-    } else {
-        printf("\n");
-        printf(" ---------------------------------------------\n");
-        printf(" |Pos:|Val:|     Address:     |       Next:      |\n");
-        printf(" ---------------------------------------------\n");
-        PrintList(head);
-        printf(" ---------------------------------------------\n");
-
-    }
-}
-
-void PrintList(const subreddit* head){
-    printf(" |%3i |%50s |%15p |%15p |\n",head->position,head->name,head,head->next);
-    if (head->next == NULL){ 
-        return;
-    }
-    PrintList(head->next);
-}
-
-void RemoveItem(subreddit** head, int n){
-    subreddit * current = *head;
-    subreddit * temp = NULL;
-    for (int i = 0; i < n - 1; i++){
-        current = current->next;
-    }
-
-    temp = current->next;
-    current->next = temp->next;
-    free(temp);
-
-    while (current->next != NULL){
-        current = current->next;
-        current->position = current->position - 1;
-    }
-}
-
 int SearchList(const subreddit* head, char * key){
     if (strcmp(head->name, key)==0){
-        //printf(" Key found at Position: %i\n", head->position);
         return head->position;
     }
     if (head->next==NULL){
