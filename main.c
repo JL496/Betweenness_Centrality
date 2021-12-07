@@ -70,6 +70,7 @@ int main(int argc, char* argv[]){
     }
     const double time3 = omp_get_wtime();
 
+    #pragma omp for
     for(int i = 0; i < num_nodes; i++){
         dijkstra(graph, i, totals);
     }
@@ -82,7 +83,7 @@ int main(int argc, char* argv[]){
         printf("%s: %d\n", names[order[i]], totals[i]);
     }
     const double time6 = omp_get_wtime();
-    printf("Read Time: %12.5e\nShortest Path Time: %12.5e\nSort Time: %12.5e\nTotal Time: %12.5e", time2-time1, time4-time3, time5-time4,time6-time0);
+    printf("Read Time: %12.5e\nShortest Path Time: %12.5e\nSort Time: %12.5e\nTotal Time: %12.5e\n", time2-time1, time4-time3, time5-time4,time6-time0);
 
 
     fclose(file);
