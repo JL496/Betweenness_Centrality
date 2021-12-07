@@ -64,6 +64,7 @@ int main(int argc, char* argv[]){
     }
     const double time2 = omp_get_wtime();
 
+    #pragma omp parallel for num_threads(thread_count)
     for(int j = 0; j < num_nodes; j++){
         totals[j] = 0;
         order[j] = j;
