@@ -45,7 +45,8 @@ int main(int argc, char* argv[]){
     for(int i = 0; i < 143281; i++){
         dest = NULL;
         source = NULL;
-        #pragma omp critical {
+        #pragma omp critical
+        {
         fgets(buf, 3000, file);
         }
         source = strtok(buf, "\t");
