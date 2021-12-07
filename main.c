@@ -11,13 +11,14 @@
 #include "subreddits.h"
 #include "radixsort.h"
 #ifdef _OPENMP
-#include <omp.h>
+# include <omp.h>
 #endif
 
 int main(int argc, char* argv[]){
     const double time0 = omp_get_wtime();
 
     const int thread_count = strtol(argv[1], NULL, 10);
+
     const int num_nodes = 35775; //35775
     
     char* filename = "soc-redditHyperlinks-body.tsv";
@@ -63,7 +64,6 @@ int main(int argc, char* argv[]){
     }
     const double time2 = omp_get_wtime();
 
-    #pragma omp parallel for num_threads(thread_count)
     for(int j = 0; j < num_nodes; j++){
         totals[j] = 0;
         order[j] = j;
@@ -84,6 +84,7 @@ int main(int argc, char* argv[]){
     }
     const double time6 = omp_get_wtime();
     printf("Read Time: %12.5e\nShortest Path Time: %12.5e\nSort Time: %12.5e\nTotal Time: %12.5e\n", time2-time1, time4-time3, time5-time4,time6-time0);
+
 
     fclose(file);
 
