@@ -17,8 +17,7 @@
 int main(int argc, char* argv[]){
     const double time0 = omp_get_wtime();
 
-    //const int thread_count = strtol(argv[1], NULL, 10);
-    //const int N = strtol(argv[2], NULL, 10);
+    const int thread_count = strtol(argv[1], NULL, 10);
     const int num_nodes = 35775; //35775
     
     char* filename = "soc-redditHyperlinks-body.tsv";
@@ -70,7 +69,7 @@ int main(int argc, char* argv[]){
     }
     const double time3 = omp_get_wtime();
 
-    #pragma omp for
+    #pragma omp parallel for num_threads(thread_count)
     for(int i = 0; i < num_nodes; i++){
         dijkstra(graph, i, totals);
     }
