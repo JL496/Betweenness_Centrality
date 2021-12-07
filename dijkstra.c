@@ -42,7 +42,6 @@ void dijkstra(struct Graph* graph, int z, int* locs){
         }
     }
 
-    #pragma omp parallel for num_threads(thread_count)
     for(int i = 0; i < verts; i++){
         int a = nods[i];
         while(a != -1 && a != z && a != INT_MAX){
