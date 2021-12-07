@@ -10,7 +10,9 @@
 #include "graph.h"
 #include "subreddits.h"
 #include "radixsort.h"
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 
 int main(int argc, char* argv[]){
     const double time0 = omp_get_wtime();
