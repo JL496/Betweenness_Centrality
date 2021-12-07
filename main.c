@@ -84,8 +84,6 @@ int main(int argc, char* argv[]){
     }
     const double time6 = omp_get_wtime();
     printf("Read Time: %12.5e\nShortest Path Time: %12.5e\nSort Time: %12.5e\nTotal Time: %12.5e\n", time2-time1, time4-time3, time5-time4,time6-time0);
-    printf("Count: %d\n", count);
-
 
     fclose(file);
 
