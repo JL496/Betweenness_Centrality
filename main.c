@@ -40,11 +40,14 @@ int main(int argc, char* argv[]){
     char names[num_nodes][22];
     const double time1 = omp_get_wtime();
     int count = 0;
-    while(fgets(buf,3000,file) != NULL){
-    //for(int i = 0; i < 400; i++){
+    //while(fgets(buf,3000,file) != NULL){
+    #pragma omp parallel for num_threads(thread_count)
+    for(int i = 0; i < 143281; i++){
         dest = NULL;
         source = NULL;
+        #pragma omp critical {
         fgets(buf, 3000, file);
+        }
         source = strtok(buf, "\t");
         dest = strtok(NULL, "\t");
         if(head != NULL){
@@ -79,7 +82,7 @@ int main(int argc, char* argv[]){
     }
     const double time4 = omp_get_wtime();
 
-    radix(totals, order, num_nodes, thread_count);
+    radix(totals, order, num_nodes);
     const double time5 = omp_get_wtime();
 
     for(int i = num_nodes-20; i < num_nodes; i++){

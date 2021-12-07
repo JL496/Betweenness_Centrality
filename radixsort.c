@@ -43,10 +43,9 @@ void cSort(int* arr, int* ord, int nodes, int n){
     }
 }
  
-void radix(int* arr, int* ord, int nodes, int thread_count){
+void radix(int* arr, int* ord, int nodes){
     int max = getMax(arr, nodes);
-    
-    #pragma omp parallel for num_threads(thread_count)
+
     for (int n = 1; max/n > 0; n *= 10){
         cSort(arr, ord, nodes, n);
     }
