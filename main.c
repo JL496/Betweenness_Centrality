@@ -39,9 +39,7 @@ int main(int argc, char* argv[]){
 
     char names[num_nodes][22];
     const double time1 = omp_get_wtime();
-    //while(fgets(buf,3000,file) != NULL){
-    #pragma omp parallel for num_threads(thread_count)
-    for(int i = 0; i < 143281; i++){
+    while(fgets(buf,3000,file) != NULL){
         dest = NULL;
         source = NULL;
         fgets(buf, 3000, file);
