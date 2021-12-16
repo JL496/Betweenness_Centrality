@@ -21,9 +21,11 @@ int main(int argc, char* argv[]){
 
     const int num_nodes = 35775; //35775
     
+    //open file
     char* filename = "soc-redditHyperlinks-body.tsv";
     FILE* file = fopen(filename,"r");
 
+    //initialize variables
     struct Graph* graph = newGraph(num_nodes);
     char * source = NULL;
     char * dest = NULL;
@@ -39,6 +41,8 @@ int main(int argc, char* argv[]){
 
     char names[num_nodes][22];
     const double time1 = omp_get_wtime();
+
+    //go through file, reading into buffer
     while(fgets(buf,3000,file) != NULL){
         dest = NULL;
         source = NULL;
@@ -46,24 +50,28 @@ int main(int argc, char* argv[]){
         source = strtok(buf, "\t");
         dest = strtok(NULL, "\t");
         if(head != NULL){
+            //check if source is already in list and get location if it is
             src_loc = SearchList(head, source);
         }
         if(src_loc == -1){
+            //adds item if not in list
             src_loc = AddItem(&head, source);
-            strcpy(names[src_loc], source);
+            strcpy(names[src_loc], source); //uses different array to get name later
         }
         if(head != NULL){
+            //check if source is already in list and get location if it is
             des_loc = SearchList(head, dest);
         }
         if(des_loc == -1){
             des_loc = AddItem(&head, dest);
-            strcpy(names[des_loc], dest);
+            strcpy(names[des_loc], dest); //uses different array to get name later
         }
+        //adds edge to the graph between source and destination for paths
         addEdge(graph, src_loc, des_loc);
     }
+    DeleteList(&head);
     const double time2 = omp_get_wtime();
 
-    #pragma omp parallel for num_threads(thread_count)
     for(int j = 0; j < num_nodes; j++){
         totals[j] = 0;
         order[j] = j;
